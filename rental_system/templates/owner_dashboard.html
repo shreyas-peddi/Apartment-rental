@@ -1,0 +1,161 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="">
+<head>
+<title>{{ request.user }}</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+<link href="{% static 'css/layout.css' %}" rel="stylesheet" type="text/css" media="all">
+<link href="{% static 'css/font-awesome.css' %}" rel="stylesheet" type="text/css" media="all">
+<link href="{% static 'css/font-awesome.min.css' %}" rel="stylesheet" type="text/css" media="all">
+<link href="{% static 'css/custom-flexslider.css' %}" rel="stylesheet" type="text/css" media="all">
+
+</head>
+<body id="top">
+
+<div class="wrapper row0">
+  <div id="topbar" class="hoc clear"> 
+
+    <div class="fl_left">
+      <ul>
+        <li><i class="fa fa-phone"></i> +91 933818155</li>
+        <li><i class="fa fa-envelope-o"></i> shreyas_peddi@srmap.edu.in</li>
+      </ul>
+    </div>
+    <div class="fl_right">
+      <ul>
+        <li><a href="#"><i class="fa fa-lg fa-home"></i></a></li>
+        <li><a href="{% url 'logout' %}">Logout</a></li>
+
+      </ul>
+    </div>
+   
+  </div>
+</div>
+
+<div class="wrapper row1">
+  <header id="header" class="hoc clear"> 
+
+    <div id="logo" class="fl_left">
+      <h1><a href="#">Rent it Out</a></h1>
+      <p>We provide the best</p>
+    </div>
+    <div id="quickinfo" class="fl_right">
+      <ul class="nospace inline">
+        <li><strong>shreyas:</strong><br>
+          18110010310</li>
+        <li><strong>harsha:</strong><br>
+          18110010222</li>
+        <li><strong>shivam:</strong><br>
+          18110010290</li>  
+      </ul>
+    </div>
+    
+  </header>
+  <nav id="mainav" class="hoc clear"> 
+    
+    <ul class="clear">
+      <li class="active"><a href="#">Home</a></li>
+      <li class="active"><a href="#">Contact Us</a></li>
+      
+      
+    </ul>
+    
+  </nav>
+</div>
+
+<div class="wrapper bgded overlay" style="background-image:url('static/images/buildingBackground.png');">
+  <section id="breadcrumb" class="hoc clear"> 
+   
+    <h6 class="heading">Welcome {{ request.user }}</h6>
+    
+  </section>
+</div>
+
+<div class="wrapper row3">
+  <main class="hoc container clear"> 
+    
+    <div class="sidebar one_quarter first"> 
+
+      <nav class="sdb_holder">
+        <ul>
+          <li><a href="{% url 'addProperty' %}">Add property</a></li>
+
+      </nav>
+      <form action = "#" method = "post" >
+        {% csrf_token %}
+        <p><b>Sort:</b></p>
+        <input type='radio' name='sort' value='1'>By Name <br>
+        <input type='radio' name='sort' value='2'>By Rent due <br><br><br>
+        <input type='submit' class="btn" value='search'><br>
+      </form>
+      <div class="sdb_holder">
+      
+      </div>
+     
+    </div>
+    
+    <div class="content three_quarter"> 
+
+      <h1>Tenants</h1>
+      {% for tenant in tenants %}
+      <b>Username:</b>{{ tenant.visitor_id }}<br>
+      <b>Profile:</b>{{ tenant.visitor_id.profile }}<br>
+      <b>Rent to be paid:</b>{{ tenant.rent_to_be_paid }}<br>
+      <hr><br>
+      {% endfor %}
+      <br><br><br>
+      <h1>My Properties</h1>
+      
+
+      {% for i in properties %}
+          <a href="{% url 'prop' i.id %}"> <b>Property</b>{{ i.id }}<br></a>
+           <strong> Description : </strong> {{ i.description }}<br>
+           <strong> Located in : </strong> {{ i.location }} <br>
+           <strong> Num of views : </strong> {{ i.num_views }}<br>
+           <br><br>
+      {% endfor %}
+      <div class="pagination">
+
+            {% if properties.has_previous %}
+                <a href="?page={{ properties.previous_page_number }}" class="btn">previous</a>
+            {% endif %}
+
+            
+                Page {{ properties.number }} of {{ properties.paginator.num_pages }}.
+            
+            {% if properties.has_next %}
+                <a href="?page={{ properties.next_page_number }}" class="btn">next</a>
+            {% endif %}
+        
+      </div>
+    </div>
+
+    <div class="clear"></div>
+  </main>
+</div>
+
+<div class="wrapper row4 bgded overlay" style="background-image:url('static/images/buildingBackground.png');">
+  <footer id="footer" class="hoc clear"> 
+    
+    <div class="center btmspace-50">
+      <h2 class="heading">Rent It Out</h2>
+      <nav>
+        <ul class="nospace inline pushright uppercase">
+          <li><a href="{% url 'home' %}"><i class="fa fa-lg fa-home"></i></a></li>
+          <li><a href="{% url 'home' %}">About</a></li>
+          <li><a href="{% url 'home' %}">Contact</a></li>
+          </ul>
+      </nav>
+    </div>
+</div>
+    <a id="backtotop" href="#top"><i class="fa fa-chevron-up"></i></a>
+
+<script src="{% static 'js/jquery.min.js' %}"></script>
+<script src="{% static 'js/jquery.backtotop.js' %}"></script>
+<script src="{% static 'js/jquery.mobilemenu.js' %}"></script>
+<script src="{% static 'js/jquery.flexslider-min.js' %}"></script>
+
+</body>
+</html>
